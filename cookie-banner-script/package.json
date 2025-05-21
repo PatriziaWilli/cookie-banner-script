@@ -1,0 +1,22 @@
+{
+  "name": "cookie-banner-script",
+  "version": "1.0.0",
+  "description": "Universal GDPR/FADP-compliant cookie banner script",
+  "main": "cookie-banner.js",
+  "scripts": {
+    "build": "esbuild cookie-banner.js --bundle --minify --outfile=cookie-banner.min.js",
+    "dev": "esbuild cookie-banner.js --bundle --outfile=cookie-banner.min.js --watch"
+  },
+  "keywords": [
+    "cookie",
+    "gdpr",
+    "banner",
+    "whiletrue",
+    "privacy"
+  ],
+  "author": "Patrizia Willi",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.25.4"
+  }
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Test Cookie Banner + Pixel</title>
+
+  <!-- 1) Fallback fbq -->
+  <script>
+    window.fbq = window.fbq || function() {
+      console.log('⚠️ fbq chiamato ma non caricato, ignorato.');
+    };
+  </script>
+
+  <!-- 2) Analytics placeholder -->
+  <script
+    data-cookie-placeholder="analytics"
+    src="https://www.googletagmanager.com/gtag/js?id=GA-TEST-ID"
+    async
+  ></script>
+  <script data-cookie-placeholder="analytics">
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA-TEST-ID');
+  </script>
+
+  <!-- 3) Marketing placeholder -->
+  <script data-cookie-placeholder="marketing">
+    !function(f,b,e,v,n,t,s){
+      if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n; n.push=n; n.loaded=!0; n.version='2.0';
+      n.queue=[]; t=b.createElement(e); t.async=!0;
+      t.src=v; s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s);
+    }(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js'
+    );
+    fbq('init', 'FB-TEST-ID');
+    fbq('track', 'PageView');
+  </script>
+</head>
+
+<body>
+  <h1>🎉 Pagina di test Cookie Banner + Pixel</h1>
+  <p>Apri la console e la tab Network, rifiuta/accetta e ricarica per verificare.</p>
+
+  <!-- 4) Il banner script aggiornato (da Netlify) -->
+  <script
+    src="https://stunning-starlight-30afbc.netlify.app/cookie-banner.min.js"
+    data-site-id="hq2efww5f0jtlnlp6rk64gq9"
+    data-token="test_token"
+    async
+  ></script>
+</body>
+</html>
