@@ -27,6 +27,14 @@
 
   <!-- 3) Marketing placeholder -->
   <script type="text/plain" data-cookie-placeholder="marketing">
+    function waitForFbq(callback, tries = 10) {
+      if (typeof fbq === 'function' && fbq.callMethod) {
+        callback();
+      } else if (tries > 0) {
+        setTimeout(() => waitForFbq(callback, tries - 1), 200);
+      }
+    }
+
     !function(f,b,e,v,n,t,s){
       if(f.fbq)return;n=f.fbq=function(){n.callMethod?
         n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -37,8 +45,11 @@
     }(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js'
     );
-    fbq('init', 'FB-TEST-ID');
-    fbq('track', 'PageView');
+
+    waitForFbq(() => {
+      fbq('init', 'FB-TEST-ID');
+      fbq('track', 'PageView');
+    });
   </script>
 </head>
 
