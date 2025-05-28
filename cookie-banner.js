@@ -8,12 +8,9 @@
 
   const apiUrl = `https://brave-connection-f862697dcf.strapiapp.com/api/clients/${siteId}?populate=cookies`;
 
-
-  // 1) globali
   let allCategories = [];
   let lastCookies   = [];
 
-  // 2) readConsent
   function readConsent() {
     const match = document.cookie.match(
       new RegExp('(^| )' + COOKIE_NAME + '=([^;]+)')
@@ -32,7 +29,6 @@
     return null;
   }
 
-  // 3) writeConsent
   function writeConsent(categories) {
     console.log("Scrivo cookie_consent con:", categories);
     const value   = encodeURIComponent(JSON.stringify(categories));
@@ -42,7 +38,6 @@
       `${COOKIE_NAME}=${value};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
   }
 
-  // 4) load placeholder scripts
   function loadScriptsByCategory(category) {
     document
       .querySelectorAll(`script[data-cookie-placeholder="${category}"]`)
@@ -58,14 +53,12 @@
       });
   }
 
-  // 5) block scripts
   function blockScriptsByCategory(category) {
     document
       .querySelectorAll(`script[data-cookie-category="${category}"]`)
       .forEach(s => s.parentNode.removeChild(s));
   }
 
-  // 6) updateScripts
   function updateScripts(consentCategories) {
     allCategories.forEach(cat => {
       if (consentCategories.includes(cat)) {
@@ -76,7 +69,6 @@
     });
   }
 
-  // 7) pulsante persistente
   function createPersistentButton() {
     let btn = document.getElementById('cookie-settings-button');
     if (!btn) {
@@ -105,11 +97,9 @@
     }
   }
 
-  // 8) banner iniziale
   function createCookieBanner(cookies) {
     lastCookies = cookies;
 
-    // popola allCategories la prima volta
     allCategories = [...new Set(cookies.map(c => c.category))];
     if (!allCategories.includes('essential')) {
       allCategories.unshift('essential');
@@ -172,7 +162,6 @@
     document.body.appendChild(banner);
   }
 
-  // 9) pannello di personalizzazione
   function showCustomizePanel() {
     const oldBanner = document.getElementById('cookie-banner');
     if (oldBanner) oldBanner.remove();
@@ -239,7 +228,6 @@
     };
   }
 
-  // 10) Fetch iniziale
   fetch(apiUrl)
     .then(r => r.json())
     .then(json => {
@@ -256,18 +244,19 @@
       const cookies = client.cookies || [];
       console.log('✅ Banner attivato per:', siteId, '📦 Cookies:', cookies);
 
-      // **POPOLA QUI** allCategories ANCHE DOPO IL PRIMO FETCH
       allCategories = [...new Set(cookies.map(c => c.category))];
       if (!allCategories.includes('essential')) {
         allCategories.unshift('essential');
       }
 
       const saved = readConsent();
-      if (saved) {
+
+      // ✅ PATCH QUI: anche se cookie assente o corrotto → mostra il banner
+      if (!saved || !Array.isArray(saved)) {
+        createCookieBanner(cookies);
+      } else {
         updateScripts(saved);
         createPersistentButton();
-      } else {
-        createCookieBanner(cookies);
       }
     })
     .catch(err => console.error('Errore di fetch:', err));

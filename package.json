@@ -4,8 +4,8 @@
   "description": "Universal GDPR/FADP-compliant cookie banner script",
   "main": "dist/cookie-banner.min.js",
   "scripts": {
-    "build": "esbuild cookie-banner.js --bundle --minify --outfile=dist/cookie-banner.min.js",
-    "dev":   "esbuild cookie-banner.js --bundle --outfile=dist/cookie-banner.min.js --watch"
+    "build": "terser cookie-banner.js -c -m -o dist/cookie-banner.min.js",
+    "dev": "esbuild cookie-banner.js --bundle --outfile=dist/cookie-banner.min.js --watch"
   },
   "keywords": [
     "cookie",
@@ -17,6 +17,7 @@
   "author": "Patrizia Willi",
   "license": "MIT",
   "devDependencies": {
-    "esbuild": "^0.25.4"
+    "esbuild": "^0.25.4",
+    "terser": "^5.40.0"
   }
 }
