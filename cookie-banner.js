@@ -6,7 +6,8 @@
 
   if (!siteId || !token) return;
 
-  const apiUrl = `http://localhost:1337/api/clients/${siteId}?populate=cookies`;
+  const apiUrl = `https://brave-connection-f862697dcf.strapiapp.com/api/clients/${siteId}?populate=cookies`;
+
 
   // 1) globali
   let allCategories = [];
