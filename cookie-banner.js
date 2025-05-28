@@ -44,6 +44,7 @@
       .forEach(ph => {
         if (ph.dataset.loaded === 'true') return;
         const ns = document.createElement('script');
+        ns.type = 'text/javascript';
         if (ph.src)       ns.src       = ph.src;
         if (ph.async)     ns.async     = true;
         if (ph.defer)     ns.defer     = true;
@@ -251,7 +252,6 @@
 
       const saved = readConsent();
 
-      // ✅ PATCH QUI: anche se cookie assente o corrotto → mostra il banner
       if (!saved || !Array.isArray(saved)) {
         createCookieBanner(cookies);
       } else {
