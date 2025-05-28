@@ -252,11 +252,11 @@
 
       const saved = readConsent();
 
-      if (!saved || !Array.isArray(saved)) {
-        createCookieBanner(cookies);
-      } else {
+      if (Array.isArray(saved) && saved.length > 0) {
         updateScripts(saved);
         createPersistentButton();
+      } else {
+        createCookieBanner(cookies); // Mostra solo il banner, NON scrive cookie
       }
     })
     .catch(err => console.error('Errore di fetch:', err));
